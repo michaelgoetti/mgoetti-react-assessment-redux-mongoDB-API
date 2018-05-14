@@ -39,7 +39,7 @@ function listReducer(state = [], action) {
 			return {
 				...state,
 				...initialState,
-				data: [],
+				data: state.data,
 				isPending: true
 			};
 		case 'ADD_ITEM_FULFILLED':
@@ -63,7 +63,7 @@ function listReducer(state = [], action) {
 			return {
 				...state,
 				...initialState,
-				data: [],
+				data: state.data,
 				isPending: true
 			};
 		case 'COMPLETE_ITEM_FULFILLED':
@@ -88,7 +88,7 @@ function listReducer(state = [], action) {
 			return {
 				...state,
 				...initialState,
-				data: [],
+				data: state.data,
 				isPending: true
 			};
 		case 'REMOVE_ITEM_FULFILLED':

@@ -22,6 +22,7 @@ class App extends Component {
 		this.handleTitleChange = this.handleTitleChange.bind(this);
 		this.search = this.search.bind(this);
 		this.toggleEditMode = this.toggleEditMode.bind(this);
+		this.enterPressed = this.enterPressed.bind(this);
 
 	}
 
@@ -52,8 +53,21 @@ class App extends Component {
     this.setState({tempItemTitle: event.target.value});
 	}
 
+	enterPressed(event) {
+    var code = event.keyCode || event.which;
+    if(code === 13 && this.state.tempItemTitle !== '') { 
+			this.addToList();
+    } 
+	}
+	
 	componentDidMount() {
 		this.props.getAllItems();
+		document.addEventListener("keydown", this.enterPressed);
+		document.getElementById("main-input").focus();
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener("keydown", this.enterPressed);
 	}
 
   render() {
@@ -68,12 +82,13 @@ class App extends Component {
 					className="main-entry" 
 					style={{mainStyle}}
 				>
-					<span>with Redux, NodeJS API, and MongoDB</span>
+					<span>with Redux, Node/Express API, and MongoDB</span>
 					<h2>TO-DO:</h2>
 					
 					<input 
 						type="text" 
 						className="form-control main-input" 
+						id="main-input"
 						value={ this.state.tempItemTitle } 
 						onChange={ this.handleTitleChange } 
 					/>
