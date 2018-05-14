@@ -23,29 +23,33 @@ class ListItem extends Component {
 	}
 
 	completeItem(id) {
-		let request = { id: id };
-		return axios({
-      url: this.urlStart + "completeItem",
-      method: 'post',
-      data: request,
-		})
-    .then(() => this.props.funcSearch())
-    .catch((error) => {
-        console.error(error);
-    });
+		// let request = { id: id };
+		// return axios({
+    //   url: this.urlStart + "completeItem",
+    //   method: 'post',
+    //   data: request,
+		// })
+    // .then(() => this.props.funcSearch())
+    // .catch((error) => {
+    //     console.error(error);
+		// });
+		console.log("listitem.js id: ", id);
+		this.props.completeItem(id);
+	}
+
+	addToList() {
+		let currItem = {
+			title: this.state.tempItemTitle,
+			description: '',
+			cplt: false,
+		};
+		this.setState({ tempItemTitle: '' });
+		this.props.addItem(currItem);
 	}
 
 	deleteItem(id) {
-		let request = { id: id };
-		return axios({
-      url: this.urlStart + "deleteItem",
-      method: 'post',
-      data: request,
-		})
-    .then(() => this.props.funcSearch())
-    .catch((error) => {
-        console.error(error);
-    });
+		console.log("listitem.js id: ", id);
+		this.props.removeItem(id);
 	}
 
   render() {

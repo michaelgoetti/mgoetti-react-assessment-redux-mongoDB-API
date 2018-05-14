@@ -1,33 +1,45 @@
+import instance from '../axiosconfig';
+
+export const GET_LIST_PENDING = 'GET_LIST_PENDING';
+export const GET_LIST_FULFILLED = 'GET_LIST_FULFILLED';
+export const GET_LIST_REJECTED = 'GET_LIST_REJECTED';
 export const GET_LIST = 'GET_LIST';
 export const ADD_ITEM = 'ADD_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const COMPLETE_ITEM = 'COMPLETE_ITEM';
 
-export function getAllItems(listItems) {
+// export function getAllItems(listItems) {
+//   return {
+//     type: GET_LIST,
+//     listItems
+//   }
+// }
+export function getAllItems() {
   return {
     type: GET_LIST,
-    listItems
+    payload: instance.get('/list'),
   }
 }
 
-export function addItem(listItem) {
+export function addItem(currItem) {
   return {
     type: ADD_ITEM,
-    listItem
+    payload: instance.post('/list', currItem),
   }
 }
 
-export function removeItem(listItem) {
+export function removeItem(id) {
 	return {
 		type: REMOVE_ITEM,
-		listItem,
+		payload: instance.post('/deleteItem', {id: id}),
 	}
 }
 
-export function completeItem(index) {
+export function completeItem(id) {
+	console.log("completeyItem ID: ", {id: id});
 	return {
 		type: COMPLETE_ITEM,
-		index,
+		payload: instance.post('/completeItem', {id: id}),
 	}
 }
 

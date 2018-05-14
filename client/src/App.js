@@ -26,9 +26,10 @@ class App extends Component {
 	}
 
 	search() {
-		fetch(this.url)
-			.then(res => res.json()
-			.then(json => this.props.getAllItems(json)))
+		// fetch(this.url)
+		// 	.then(res => res.json()
+		// 	.then(json => this.props.getAllItems(json)))
+		this.props.getAllItems();
 	}
 
 	toggleEditMode(id) {
@@ -44,15 +45,7 @@ class App extends Component {
 			cplt: false,
 		};
 		this.setState({ tempItemTitle: '' });
-		return axios({
-      url: this.url,
-      method: 'post',
-      data: currItem,
-		})
-    .then(() => this.search())
-    .catch((error) => {
-        console.error(error);
-		});
+		this.props.addItem(currItem);
 	}
 
 	handleTitleChange(event) {
@@ -60,7 +53,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.search();
+		this.props.getAllItems();
 	}
 
   render() {
@@ -75,7 +68,7 @@ class App extends Component {
 					className="main-entry" 
 					style={{mainStyle}}
 				>
-					<span>with Redux</span>
+					<span>with Redux, NodeJS API, and MongoDB</span>
 					<h2>TO-DO:</h2>
 					
 					<input 
@@ -102,10 +95,11 @@ class App extends Component {
 				
 				<br />
 				{ listReducer.length === 0 ? null :
+					listReducer.data.length === 0 ? null :
 					<div className="task-array">
 						<h4>Items:</h4>
 						{
-							listReducer.map((item, index) => {
+							listReducer.data.map((item, index) => {
 								return (
 									<ListItem 
 										key={ `item-${index}` }

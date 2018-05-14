@@ -24,6 +24,7 @@
     "redux-promise-middleware": "^5.1.1",
     "redux-thunk": "^2.2.0",
     "request": "^2.85.0",
+    "type-to-reducer": "^1.1.0",
     "yarn": "^1.6.0"
   },
   "scripts": {

@@ -4,6 +4,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from './reducers';
 
 const middleware = applyMiddleware(promiseMiddleware(), logger);
+// const middleware = applyMiddleware(promiseMiddleware());
 
 const store = createStore(rootReducer, middleware);
 

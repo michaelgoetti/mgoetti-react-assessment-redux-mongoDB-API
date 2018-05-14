@@ -68,70 +68,50 @@ router.get('/', function(req, res) {
 			res.json(listdata)
 		});
 	})
-
 // POST route
 	.post(function (req, res) {
-		console.log(req.body);
-		var testReq = req.body;
-		console.log("testReq: ", testReq);
 		var newItem = new listData(req.body);
-		newItem.save(function (err) {
-			if (err) res.send(err);
-			res.json({ message: 'New Item successfully added!', reqBody: req.body });
-		});
+		newItem.save()
+			.then(() => {
+				listData.find().exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+				})
+			})
+		;
 	});
 
 
 router.route('/completeItem')
 // POST route
 	.post(function (req, res) {
-		console.log("req.body: ", req.body);
-		listData.findByIdAndUpdate(req.body.id,{ cplt: true },
-			(err, todo) => {
-				if (err) return res.status(500).send(err);
-				return res.send(todo);
-			}
-		)
+		console.log("complete ID: ", req.body);
+		listData.findByIdAndUpdate(req.body.id,{ cplt: true })
+			.then(() => {
+				listData.find().exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+				})
+			})
+		;
 	});
 
 router.route('/deleteItem')
 // POST route
 	.post(function (req, res) {
 		console.log("req.body: ", req.body);
-		listData.findByIdAndRemove(req.body.id,
-			(err, todo) => {
-				if (err) return res.status(500).send(err);
-				return res.send(todo);
-			}
-		)
+		listData.findByIdAndRemove(req.body.id)
+			.then(() => {
+				listData.find().exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+				})
+			})
+		;
 	});
-
-function verifyHumanity(req) {
-	const secretKey = ( process.env.CAPTCHA_SECRET_KEY ? process.env.CAPTCHA_SECRET_KEY : process.env.REACT_APP_CAPTCHA_SECRET_KEY );
-	const d = Q.defer();
-	const recaptchaResponse = req.body['gRecaptchaResponse'];
-	request.post('https://www.google.com/recaptcha/api/siteverify', {
-		form: {
-			secret: secretKey,
-			response: recaptchaResponse,
-			remoteip: req.connection.remoteAddress
-		}
-	}, (err, httpResponse, body)=>{
-		if (err) {
-			d.reject(new Error(err));
-		} else {
-			const r = JSON.parse(body);
-			if (r.success) {
-				d.resolve(r.success);
-			} else {
-				console.log("verification error response: ", r);
-				d.reject(new Error());
-			}
-		}
-	});
-	return d.promise;
-}
-
 
 //Use our router configuration when we call /api
 app.use('/api', router);
