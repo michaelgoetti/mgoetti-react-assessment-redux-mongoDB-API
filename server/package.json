@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon -r babel-register server.js",
+    "build": "babel .  --out-dir build",
+    "start:prod": "node build/server.js"
+  }
+}
