@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { removeItem, completeItem } from './actions';
-import './App.css';
+import { removeItem, completeItem } from '../actions';
+// import './App.css';
 
 class ListItem extends Component {
 	constructor(props) {
@@ -12,7 +13,7 @@ class ListItem extends Component {
 		this.completeItem = this.completeItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 
-		this.urlStart = "http://localhost:3001/api/"
+		this.urlStart = "http://localhost:3001/api/"  // no longer needed?
 
 	}
 
@@ -23,17 +24,6 @@ class ListItem extends Component {
 	}
 
 	completeItem(id) {
-		// let request = { id: id };
-		// return axios({
-    //   url: this.urlStart + "completeItem",
-    //   method: 'post',
-    //   data: request,
-		// })
-    // .then(() => this.props.funcSearch())
-    // .catch((error) => {
-    //     console.error(error);
-		// });
-		console.log("listitem.js id: ", id);
 		this.props.completeItem(id);
 	}
 
@@ -48,7 +38,6 @@ class ListItem extends Component {
 	}
 
 	deleteItem(id) {
-		console.log("listitem.js id: ", id);
 		this.props.removeItem(id);
 	}
 
@@ -75,14 +64,14 @@ class ListItem extends Component {
 				> 
 					Complete 
 				</button>
-				<button 
-					className="btn btn-info cplt-btn" 
-					onClick={ () => this.editItem(payload['_id']) }
-					disabled={ payload.cplt }	
-				> 
-					Edit 
-				</button>
-				{ payload['_id'] }
+				<Link to={ `/editItem/${payload['_id']}` }>
+					<button 
+						className="btn btn-info cplt-btn" 
+						disabled={ payload.cplt }	
+					> 
+						Edit 
+					</button>
+				</Link>
 			</div>
     );
 	}

@@ -113,6 +113,51 @@ router.route('/deleteItem')
 		;
 	});
 
+router.route('/listSingle')
+// POST route
+	.post(function (req, res) {
+		console.log("listSingle ID: ", req.body);
+		listData.findById(req.body.id).exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+		})
+	});
+
+router.route('/completeItemEdit')
+// POST route
+	.post(function (req, res) {
+		console.log("completeItemEdit ID: ", req.body);
+		listData.findByIdAndUpdate(req.body.id,{ cplt: true })
+			.then(() => {
+				listData.findById(req.body.id).exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+				})
+			})
+		;
+	});
+
+router.route('/saveItemEdit')
+// POST route
+.post(function (req, res) {
+	console.log("saveItemEdit: ", req.body);
+	listData.findByIdAndUpdate(req.body.id,{ 
+		title: req.body.title,
+		description: req.body.description,
+		cplt: req.body.cplt
+	 })
+			.then(() => {
+				listData.findById(req.body.id).exec(function(err, listdata) {
+					if (err)
+					res.send(err);
+					res.json(listdata)
+				})
+			})
+		;
+});
+
 //Use our router configuration when we call /api
 app.use('/api', router);
 

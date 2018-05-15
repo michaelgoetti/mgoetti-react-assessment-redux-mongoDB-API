@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import ListItem from './ListItem';
 import EditItem from './EditItem';
-import { addItem, getAllItems } from './actions';
-import './App.css';
+import { addItem, getAllItems } from '../actions';
+// import '../App.css';
 
-class App extends Component {
+class Main extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -27,9 +27,6 @@ class App extends Component {
 	}
 
 	search() {
-		// fetch(this.url)
-		// 	.then(res => res.json()
-		// 	.then(json => this.props.getAllItems(json)))
 		this.props.getAllItems();
 	}
 
@@ -100,7 +97,6 @@ class App extends Component {
 						>
 							Add to List
 						</button>
-						<br /> { this.state.editMode ? "edit true" : "edit false" }
 					</div>
 
 					<br />
@@ -140,4 +136,4 @@ export default connect(
 		addItem,
 		getAllItems,
   }
- )(App);
+ )(Main);

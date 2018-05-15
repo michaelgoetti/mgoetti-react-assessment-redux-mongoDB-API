@@ -110,25 +110,104 @@ function listReducer(state = [], action) {
 			};
 			// state = action.payload.data;
 			// return state;
-		case ADD_ITEM:
-			state = [...state, action.listItem];
-			return state;
-		case REMOVE_ITEM:
-			state = state.filter(listItem => listItem['id'] !== action.listItem['id']);
-			return state;
-		case COMPLETE_ITEM:
-			return Object.assign(
-				[...state], 
-				{[action.index]:
-					Object.assign({}, state[action.index], {cplt: true})}
-			)
+		// case ADD_ITEM:
+		// 	state = [...state, action.listItem];
+		// 	return state;
+		// case REMOVE_ITEM:
+		// 	state = state.filter(listItem => listItem['id'] !== action.listItem['id']);
+		// 	return state;
+		// case COMPLETE_ITEM:
+		// 	return Object.assign(
+		// 		[...state], 
+		// 		{[action.index]:
+		// 			Object.assign({}, state[action.index], {cplt: true})}
+		// 	)
 		default:
 			return state;
 	}
 }
 
+function itemReducer(state = [], action) {
+	switch(action.type) {
+		case 'GET_ITEM_PENDING':
+			return {
+				...state,
+				...initialState,
+				data: [],
+				isPending: true
+			};
+		case 'GET_ITEM_FULFILLED':
+			console.log("get_item_fulfilled.data: ", action.payload.data);
+			return {
+				...state,
+				...initialState,
+				data: action.payload.data,
+				isFulFilled: true
+			};
+		case 'GET_ITEM_REJECTED':
+			return {
+				...state,
+				...initialState,
+				data: [],
+				err: action.payload.err,
+				isPending: true
+			};
+		case 'COMPLETE_ITEM_EDIT_PENDING':
+		return {
+			...state,
+			...initialState,
+			data: state.data,
+			isPending: true
+		};
+		case 'COMPLETE_ITEM_EDIT_FULFILLED':
+			console.log("completeItemEDit.data: ", action.payload.data);
+			console.log("it should be working?");
+			return {
+				...state,
+				...initialState,
+				data: action.payload.data,
+				isFulFilled: true
+			};
+		case 'COMPLETE_ITEM_EDIT_REJECTED':
+			return {
+				...state,
+				...initialState,
+				data: [],
+				err: action.payload.err,
+				isPending: true
+			};
+		case 'SAVE_ITEM_EDIT_PENDING':
+		return {
+			...state,
+			...initialState,
+			data: state.data,
+			isPending: true
+		};
+		case 'SAVE_ITEM_EDIT_FULFILLED':
+			console.log("completeItemEDit.data: ", action.payload.data);
+			console.log("it should be working?");
+			return {
+				...state,
+				...initialState,
+				data: action.payload.data,
+				isFulFilled: true
+			};
+		case 'SAVE_ITEM_EDIT_REJECTED':
+			return {
+				...state,
+				...initialState,
+				data: [],
+				err: action.payload.err,
+				isPending: true
+			};
+		default:
+		return state;
+	}
+}
+
 const rootReducer = combineReducers({
 	listReducer,
+	itemReducer,
 });
 
 export default rootReducer;
