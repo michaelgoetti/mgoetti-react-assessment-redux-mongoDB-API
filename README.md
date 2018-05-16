@@ -4,7 +4,7 @@
 
 ex:   `$> cd mgoetti-react-assessment-redux-mongoDB-API/server`
 
-**then copy the file .env.example to .env**
+**then copy the file `.env.example` to `.env`**
 
 ex:   `cp .env.example .env`
 
