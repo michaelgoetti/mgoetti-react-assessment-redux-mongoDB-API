@@ -86,7 +86,6 @@ router.get('/', function(req, res) {
 router.route('/completeItem')
 // POST route
 	.post(function (req, res) {
-		console.log("complete ID: ", req.body);
 		listData.findByIdAndUpdate(req.body.id,{ cplt: true })
 			.then(() => {
 				listData.find().exec(function(err, listdata) {
@@ -101,7 +100,6 @@ router.route('/completeItem')
 router.route('/deleteItem')
 // POST route
 	.post(function (req, res) {
-		console.log("req.body: ", req.body);
 		listData.findByIdAndRemove(req.body.id)
 			.then(() => {
 				listData.find().exec(function(err, listdata) {
@@ -116,7 +114,6 @@ router.route('/deleteItem')
 router.route('/listSingle')
 // POST route
 	.post(function (req, res) {
-		console.log("listSingle ID: ", req.body);
 		listData.findById(req.body.id).exec(function(err, listdata) {
 					if (err)
 					res.send(err);
@@ -127,10 +124,9 @@ router.route('/listSingle')
 router.route('/completeItemEdit')
 // POST route
 	.post(function (req, res) {
-		console.log("completeItemEdit ID: ", req.body);
 		listData.findByIdAndUpdate(req.body.id,{ cplt: true })
 			.then(() => {
-				listData.findById(req.body.id).exec(function(err, listdata) {
+				listData.find().exec(function(err, listdata) {
 					if (err)
 					res.send(err);
 					res.json(listdata)
@@ -142,14 +138,13 @@ router.route('/completeItemEdit')
 router.route('/saveItemEdit')
 // POST route
 .post(function (req, res) {
-	console.log("saveItemEdit: ", req.body);
 	listData.findByIdAndUpdate(req.body.id,{ 
 		title: req.body.title,
 		description: req.body.description,
 		cplt: req.body.cplt
 	 })
 			.then(() => {
-				listData.findById(req.body.id).exec(function(err, listdata) {
+				listData.find().exec(function(err, listdata) {
 					if (err)
 					res.send(err);
 					res.json(listdata)
@@ -160,11 +155,6 @@ router.route('/saveItemEdit')
 
 //Use our router configuration when we call /api
 app.use('/api', router);
-
-// trying to resolve Cannot /GET - per SO issue - https://stackoverflow.com/questions/44723509/
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-});
 
 //starts the server and listens for requests
 app.listen(app.get('port'), function() {

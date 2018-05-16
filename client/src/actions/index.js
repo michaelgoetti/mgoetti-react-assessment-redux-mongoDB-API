@@ -30,7 +30,6 @@ export function removeItem(id) {
 }
 
 export function completeItem(id) {
-	console.log("completeyItem ID: ", {id: id});
 	return {
 		type: COMPLETE_ITEM,
 		payload: instance.post('/completeItem', {id: id}),
@@ -38,7 +37,6 @@ export function completeItem(id) {
 }
 
 export function getOneItem(id) {
-	console.log("getOneItemey ID: ", {id: id});
   return {
     type: GET_ITEM,
     payload: instance.post('/listSingle', {id: id}),
@@ -46,7 +44,6 @@ export function getOneItem(id) {
 }
 
 export function completeItemEdit(id) {
-	console.log("completeyItemEdit ID: ", {id: id});
 	return {
 		type: COMPLETE_ITEM_EDIT,
 		payload: instance.post('/completeItemEdit', {id: id}),

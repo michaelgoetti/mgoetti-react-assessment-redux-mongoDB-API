@@ -7,6 +7,19 @@
 	margin: 10px;
 	box-shadow: 2px 2px 5px #ccc;
 	background-color: #eee;
+	font-family: 'Lato', sans-serif;
+}
+
+.btn.btn-default {
+  border-color: #ccc;
+}
+
+.btn.btn-default:hover,
+.btn.btn-default:focus,
+.btn.btn-default:active,
+.btn.btn-default.active {
+  background-color: #eee;
+  border-color: #eee;
 }
 
 .main-entry, .task-array, .edit-form {
@@ -60,6 +73,37 @@
 .cplt-btn, .del-btn {
 	float: right;
 	margin-left: 3px;
+}
+
+.edit-save-btn, .edit-cancel-btn {
+	margin-right: 5px;
+}
+
+.edit-cancel-btn {
+	border: 1px solid #ccc;
+}
+
+.edit-cplt-btn {
+	float: right;
+}
+
+.edit-title-input {
+	width: 83%;
+	display: inline-block;
+	margin-bottom: 24px;
+}
+
+.task-label, .desc-label, .back-to-tasks-link {
+	font-size: 12px;
+}
+
+.back-to-tasks-link {
+	display: inline-block;
+	color: black;
+}
+
+.back-to-tasks-link:hover {
+	text-decoration: underline;
 }
 
 .App {

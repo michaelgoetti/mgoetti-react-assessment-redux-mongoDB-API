@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import ListItem from './ListItem';
-import EditItem from './EditItem';
 import { addItem, getAllItems } from '../actions';
-// import '../App.css';
 
 class Main extends Component {
 	constructor(props) {
@@ -31,7 +28,6 @@ class Main extends Component {
 	}
 
 	toggleEditMode(id) {
-		console.log("squee");
 		this.setState({ editMode: !this.state.editMode });
 	}
   
@@ -57,7 +53,7 @@ class Main extends Component {
     } 
 	}
 	
-	componentDidMount() {
+	componentWillMount() {
 		this.props.getAllItems();
 		document.addEventListener("keydown", this.enterPressed);
 		// document.getElementById("main-input").focus();
@@ -75,50 +71,46 @@ class Main extends Component {
 		};
     return (
 			<div className="global-wrap">
-				{ this.state.editMode ? <EditItem /> : 
-					<div>
-					<div 
-						className="main-entry" 
-						style={{mainStyle}}
+				<div 
+					className="main-entry" 
+					style={{mainStyle}}
+				>
+					<span>with Redux, Node/Express API, and MongoDB</span>
+					<h2>TO-DO:</h2>
+					<input 
+						type="text" 
+						className="form-control main-input" 
+						id="main-input"
+						value={ this.state.tempItemTitle } 
+						onChange={ this.handleTitleChange } 
+					/>
+					<button 
+						className="btn btn-info add-btn" 
+						disabled={ this.state.tempItemTitle.length === 0 } 
+						onClick={ this.addToList } 
 					>
-						<span>with Redux, Node/Express API, and MongoDB</span>
-						<h2>TO-DO:</h2>
-						<input 
-							type="text" 
-							className="form-control main-input" 
-							id="main-input"
-							value={ this.state.tempItemTitle } 
-							onChange={ this.handleTitleChange } 
-						/>
-						<button 
-							className="btn btn-info add-btn" 
-							disabled={ this.state.tempItemTitle.length === 0 } 
-							onClick={ this.addToList } 
-						>
-							Add to List
-						</button>
-					</div>
+						Add to List
+					</button>
+				</div>
 
-					<br />
-					{ listReducer.length === 0 ? null :
-						listReducer.data.length === 0 ? null :
-						<div className="task-array">
-							<h4>Items:</h4>
-							{
-								listReducer.data.map((item, index) => {
-									return (
-										<ListItem 
-											key={ `item-${index}` }
-											payload={ item }
-											index={ index } 
-											funcSearch={ this.search }
-											funcEdit={ this.toggleEditMode }
-										/>
-									)
-								})
-							}
-						</div>
-					}
+				<br />
+				{ listReducer.length === 0 ? null :
+					listReducer.data.length === 0 ? null :
+					<div className="task-array">
+						<h4>Items:</h4>
+						{
+							listReducer.data.map((item, index) => {
+								return (
+									<ListItem 
+										key={ `item-${index}` }
+										payload={ item }
+										index={ index } 
+										funcSearch={ this.search }
+										funcEdit={ this.toggleEditMode }
+									/>
+								)
+							})
+						}
 					</div>
 				}
       </div>

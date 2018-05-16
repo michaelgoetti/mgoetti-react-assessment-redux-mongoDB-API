@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { getOneItem, removeItem, completeItemEdit, saveItemEdit } from '../actions';
-// import './App.css';  getOneItem
 
 class EditItem extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			title: '',
+			description: '',
 			currItem: {
 				id: '',
 				title: '',
 				description: '',
 				cplt: false,
 			},
-			title: '',
-			tempItemTitle: '',
 		}
-
-		// this.deleteItem = this.deleteItem.bind(this);
-
-		this.urlStart = "http://localhost:3001/api/";
 
 		this.handleTitleChange = this.handleTitleChange.bind(this);
 		this.handleDescChange = this.handleDescChange.bind(this);
@@ -30,13 +24,13 @@ class EditItem extends Component {
 		this.completeItemEdit = this.completeItemEdit.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 		this.saveItem = this.saveItem.bind(this);
+		this.cancelItemEdit = this.cancelItemEdit.bind(this);
 
 	}
 
 	search() {
 		this.props.getOneItem(this.props.match.params.id);
-		console.log("params: ", this.props.match.params);
-		this.setState({ currItem: this.props.itemReducer.data }, console.log("doubt IT: ", this.state));
+		this.setState({ currItem: this.props.itemReducer.data });
 	}
 
 	handleTitleChange(event) {
@@ -65,6 +59,13 @@ class EditItem extends Component {
 		this.props.saveItemEdit(currItem);
 	}
 
+	cancelItemEdit() {
+		this.setState({
+			title: this.props.itemReducer.data.title,
+			description: this.props.itemReducer.data.description,
+		});
+	}
+
 	componentWillMount() {
 		this.search();
 	}
@@ -76,7 +77,7 @@ class EditItem extends Component {
 					title: nextProps.itemReducer.data.title,
 					description: nextProps.itemReducer.data.description,
 					cplt: nextProps.itemReducer.data.cplt,
-				});
+			});
 		}
 	}
 
@@ -88,41 +89,46 @@ class EditItem extends Component {
 					<Link to={'/'}>
 						<p className="back-to-tasks-link">
 							&lt; Back to Tasks
-						</p>
+						</p> 
 					</Link>	
-					<span className="task-label">Task</span>
+					<br />
+					<span className="task-label">Task</span><br />
 					<input 
 						type="text" 
 						className="form-control edit-title-input" 
-						value={ this.state.title } // change to value from reducer 
+						value={ this.state.title }  
 						onChange={ this.handleTitleChange } 
 					/>
-					<button 
-						className="btn btn-warning edit-cplt-btn" 
-						onClick={ () => this.completeItemEdit(itemReducer.data['_id']) }
-						disabled={ this.state.cplt }	
-					> 
-					Complete 
-					</button>
+					<Link to={'/'}>
+						<button 
+							className="btn btn-secondary edit-cplt-btn" 
+							onClick={ () => this.completeItemEdit(itemReducer.data['_id']) }
+							disabled={ this.state.cplt || this.state.title === '' }	
+						> 
+						Complete 
+						</button>
+					</Link>
 					<br />
 					<span className="desc-label">Description</span>
 					<input 
 						type="text" 
 						className="form-control edit-desc-input" 
-						value={ this.state.description  } // change to value from reducer 
+						value={ this.state.description  }  
 						onChange={ this.handleDescChange } 
 					/>
 					<br />
+					<Link to={'/'}>
+						<button 
+							className="btn btn-info edit-save-btn" 
+							onClick={ () => this.saveItem() }
+							disabled={ this.state.title === '' }
+						> 
+							Save 
+						</button>
+					</Link>
 					<button 
-						className="btn btn-info edit-del-btn" 
-						onClick={ () => this.saveItem() }
-					> 
-						Save 
-					</button>
-					<button 
-						className="btn btn-warning edit-cancel-btn" 
-						// onClick={ () => this.completeItem(payload['_id']) }
-						// disabled={ payload.cplt }	
+						className="btn btn-default edit-cancel-btn" 
+						onClick={ () => this.cancelItemEdit() }
 					> 
 						Cancel 
 					</button>
@@ -136,9 +142,6 @@ class EditItem extends Component {
 						</button>
 					</Link>
 				</div>
-				title: { this.state.title }<br />
-				desc: { this.state.description }<br />
-				cplt: { this.state.cplt ? "true" : "false" }<br />
 			</div>
     );
 	}

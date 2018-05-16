@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { removeItem, completeItem } from '../actions';
-// import './App.css';
 
 class ListItem extends Component {
 	constructor(props) {
@@ -42,7 +40,7 @@ class ListItem extends Component {
 	}
 
   render() {
-		const { payload, index } = this.props;
+		const { payload } = this.props;
     return (
       <div 
 				className="list-item" 
@@ -58,7 +56,7 @@ class ListItem extends Component {
 					X 
 				</button>
 				<button 
-					className="btn btn-warning cplt-btn" 
+					className="btn btn-secondary cplt-btn" 
 					onClick={ () => this.completeItem(payload['_id']) }
 					disabled={ payload.cplt }	
 				> 
