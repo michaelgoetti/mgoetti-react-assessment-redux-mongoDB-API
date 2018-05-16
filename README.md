@@ -2,11 +2,11 @@
 
 **`**NOTE**` - After cloning this repo to your local machine, navigate to the newly created folder's 'server' directory**
 
-ex $root> cd mgoetti-react-assessment-redux-mongoDB-API/server
+ex `$> cd mgoetti-react-assessment-redux-mongoDB-API/server`
 
 **then copy the file .env.example to .env**
 
-ex cp .env.example .env
+ex `cp .env.example .env`
 
 **then edit the .env file, adding the correct MongoDB connection string as shown below.**
 **if you do not have the correct MongoDB URI, please contact me.**
